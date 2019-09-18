@@ -1,12 +1,12 @@
 version: 0.0.1
 files:
   - url: ove-electron-0.0.1-mac.zip
-    sha512: +9G+Nn/gIbUOTF7aAc/lwyai2CXC5KfE0cU/gnle+TyaC7fprPc0afE2+YTJzoLBpOS0CX3lw1z1NIPM2Ldmeg==
-    size: 77376315
-    blockMapSize: 81683
+    sha512: 4NJJC2hCyu9XxAlftHfvNMq4fThDVvNb+qsUIRzq6uBQkv8+ncVPagsl9+bgq+VJLmF2wtW61q7ia6xjYQNkJw==
+    size: 77361070
+    blockMapSize: 81578
   - url: ove-electron-0.0.1.dmg
-    sha512: +wcT7CYth9kxISNWZ2Dd8x1gzQMSvZjFUwP6IVWqhNYugH38jZkgJABvDdpe0Yc7/scINzjRtg58a0lj2AqzkQ==
-    size: 80360117
+    sha512: qj4Q1NsEP7BSVguIKky0iyuv4JVee6qGL5l70lNHJ+HPXkAOVfovfNtC53O9hlHPlJDuytpQQlaX40BABiORUw==
+    size: 80287222
 path: ove-electron-0.0.1-mac.zip
-sha512: +9G+Nn/gIbUOTF7aAc/lwyai2CXC5KfE0cU/gnle+TyaC7fprPc0afE2+YTJzoLBpOS0CX3lw1z1NIPM2Ldmeg==
-releaseDate: '2019-09-18T00:37:21.645Z'
+sha512: 4NJJC2hCyu9XxAlftHfvNMq4fThDVvNb+qsUIRzq6uBQkv8+ncVPagsl9+bgq+VJLmF2wtW61q7ia6xjYQNkJw==
+releaseDate: '2019-09-18T04:56:07.700Z'
