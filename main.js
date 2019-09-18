@@ -15,10 +15,10 @@ function getSeqJsonFromPath(_filePath) {
   let filePath = _filePath || process.argv[1];
   if (filePath === ".") return;
   const data = fs.readFileSync(path.resolve(filePath), "utf-8");
-
   //open, read, handle file
   if (!data) return;
-  return bioParsers.anyToJson(data).then(res => {
+  const fileName = filePath.replace(/^.*[\\\/]/, "");
+  return bioParsers.anyToJson(data, { fileName }).then(res => {
     return res[0].parsedSequence;
   });
 }
@@ -39,9 +39,9 @@ async function createWindow(windowVars) {
   if (!windowVars && process.platform === "win32") {
     //windows only
     try {
-      startupWindowVars.initialSeqJson = await getSeqJsonFromPath(
-        startupWindowVars
-      );
+      const initialSeqJson = await getSeqJsonFromPath();
+
+      startupWindowVars.initialSeqJson = initialSeqJson;
     } catch (e) {
       console.error(`e123421231:`, e);
     }
@@ -76,7 +76,8 @@ app.on("will-finish-launching", () => {
     //mac only
     event.preventDefault();
     try {
-      startupWindowVars.initialSeqJson = await getSeqJsonFromPath(path);
+      const initialSeqJson = await getSeqJsonFromPath(path);
+      startupWindowVars.initialSeqJson = initialSeqJson;
     } catch (e) {
       console.error(`e73562891230:`, e);
     }
