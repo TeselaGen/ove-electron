@@ -1,0 +1,7 @@
+directories:
+  output: dist
+  buildResources: build
+appId: openVectorEditor
+fileAssociations:
+  - ext: gb
+electronVersion: 6.0.9
