@@ -4,6 +4,8 @@ const path = require("path");
 const bioParsers = require("bio-parsers");
 const fs = require("fs");
 const createMenu = require("./src/utils/menu");
+const windowStateKeeper = require("electron-window-state");
+let win;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -26,14 +28,28 @@ function getSeqJsonFromPath(_filePath) {
 async function createWindow(windowVars) {
   //if no windowVars are passed then we should
   // Create the browser window.
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800
+  });
+
   let newWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+
     webPreferences: {
-      nodeIntegration: true
-      // preload: path.join(__dirname, 'preload.js')
+      // nodeIntegration: true, //we don't want to enable this because it is a security risk and slows down the app
+      preload: path.join(__dirname, "src/preload.js")
     }
   });
+
+  // Let us register listeners on the window, so we can update the state
+  // automatically (the listeners will be removed when the window is closed)
+  // and restore the maximized or full screen state
+  mainWindowState.manage(newWindow);
+
   windows.push(newWindow);
 
   if (!windowVars && process.platform === "win32") {
@@ -77,18 +93,31 @@ app.on("will-finish-launching", () => {
     event.preventDefault();
     try {
       const initialSeqJson = await getSeqJsonFromPath(path);
-      startupWindowVars.initialSeqJson = initialSeqJson;
+      createWindow({ initialSeqJson });
+      // startupWindowVars.initialSeqJson = initialSeqJson;
     } catch (e) {
       console.error(`e73562891230:`, e);
     }
   });
+  // app.on("open-files", async (event, path) => {
+  //   //mac only
+  //   event.preventDefault();
+  //   try {
+  //     const initialSeqJson = await getSeqJsonFromPath(path);
+  //     startupWindowVars.initialSeqJson = initialSeqJson;
+  //   } catch (e) {
+  //     console.error(`e73562891230:`, e);
+  //   }
+  // });
 });
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  createWindow()
+  if (!windows.length) {
+    createWindow();
+  }
 });
 
 // Quit when all windows are closed.

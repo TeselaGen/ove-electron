@@ -1,6 +1,4 @@
-const electron = require("electron");
-const currentWindow = electron.remote.getCurrentWindow();
-
+const currentWindow = window.currentWindow;
 const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
 // export default generateSequenceData()
 
