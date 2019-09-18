@@ -1,4 +1,2 @@
 node_modules
-dist/ove-electron*.dmg
-dist/mac
-win-unpacked
+dist/
