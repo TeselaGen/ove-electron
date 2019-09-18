@@ -1,12 +1,13 @@
 {
   "name": "ove-electron",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder",
-    "dist-win": "electron-builder --win"
+    "dist": "electron-builder -wm",
+    "dist-win": "electron-builder --win",
+    "dist-mac": "electron-builder --mac"
   },
   "build": {
     "appId": "openVectorEditor",
