@@ -5,12 +5,25 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder -wm",
-    "dist-win": "electron-builder --win",
-    "dist-mac": "electron-builder --mac"
+    "dist": "env-cmd electron-builder -wm --publish never",
+    "dist-win": "env-cmd electron-builder --win --publish never",
+    "dist-mac": "env-cmd electron-builder --mac --publish never",
+    "deploy": "env-cmd electron-builder -wm --publish always",
+    "deploy-win": "env-cmd electron-builder --win --publish always",
+    "deploy-mac": "env-cmd electron-builder --mac --publish always"
   },
   "build": {
-    "appId": "openVectorEditor",
+    "win": {
+      "publish": [
+        "github"
+      ]
+    },
+    "mac": {
+      "publish": [
+        "github"
+      ]
+    },
+    "appId": "com.teselagen.openVectorEditor",
     "fileAssociations": [
       {
         "ext": "gb"
@@ -55,11 +68,13 @@
   "devDependencies": {
     "electron": "^6.0.9",
     "electron-builder": "^21.2.0",
+    "env-cmd": "^10.0.1",
     "eslint": "^6.4.0",
     "eslint-config-teselagen": "^5.0.5"
   },
   "dependencies": {
     "bio-parsers": "5.6.1",
+    "electron-updater": "^4.1.2",
     "electron-window-state": "^5.0.3",
     "open-vector-editor": "^10.1.8",
     "ve-range-utils": "^2.5.5",

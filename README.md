@@ -3,8 +3,8 @@ This packages the open-vector-editor web app as an electron tool that can be use
 
 # Developing 
 ```
-npm install
-npm run start
+yarn
+yarn start
 ```
 
 # Releasing 
@@ -12,7 +12,7 @@ npm run start
 
 2. Build windows and mac 
 ```
-npm run dist
+yarn dist
 ```
 3. Go to https://github.com/tnrich/ove-electron/releases/new
 4. Tag, title, describe and upload the .dmg and .exe files and create a new release! 

@@ -1,7 +1,11 @@
-const currentWindow = window.currentWindow;
+const { currentWindow, ipcRenderer } = window;
 const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
 // export default generateSequenceData()
+const originalTitle = document.title;
 
+
+document.title =
+  originalTitle + " -- " + (seqDataToUse.name || "Untitled Sequence");
 const editor = window.createVectorEditor("createDomNodeForMe", {
   isFullscreen: true,
   // or you can pass "createDomNodeForMe" but make sure to use editor.close() to clean up the dom node!
@@ -24,7 +28,9 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   // handleFullscreenClose: () => { //comment this function in to make the editor fullscreen by default
   //   editor.close() //this calls reactDom.unmountComponent at the node you passed as the first arg
   // },
-  // onRename: () => {}, //this option should be shown by default
+  onRename: newName => {
+    document.title = originalTitle + " -- " + newName;
+  }, //this option should be shown by default
   // onNew: () => {}, //unless this callback is defined, don't show the option to create a new seq
   // onDuplicate: () => {}, //unless this callback is defined, don't show the option to create a new seq
   // onSave: function(
@@ -186,3 +192,11 @@ editor.updateEditor({
     primers: false
   }
 });
+// ************************************************************************
+// this function is super handy for debugging what is happening
+// in the main process from the renderer process !!
+//you'll need to comment it in in main.js also1
+// setInterval(() => {
+//   console.log(`currentWindow.logs:`,currentWindow.logs)
+// }, 5000);
+// ************************************************************************

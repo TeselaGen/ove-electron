@@ -1,12 +1,28 @@
+/* eslint-disable no-console*/
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const bioParsers = require("bio-parsers");
 const fs = require("fs");
 const createMenu = require("./src/utils/menu");
 const windowStateKeeper = require("electron-window-state");
-let win;
+const { autoUpdater } = require("electron-updater");
 
+// ************************************************************************
+// this function is super handy for debugging what is happening
+// in the main process from the renderer process !!
+// you'll need to comment it in in renderer.js file
+
+// console.stdlog = console.log.bind(console);
+// console.logs = [];
+// console.log = function() {
+//   console.logs.push(Array.from(arguments));
+//   console.stdlog.apply(console, arguments);
+// };
+// ************************************************************************
+
+let isAppReady = false;
+let isMacOpenTriggered = false;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let windows = [];
@@ -19,13 +35,25 @@ function getSeqJsonFromPath(_filePath) {
   const data = fs.readFileSync(path.resolve(filePath), "utf-8");
   //open, read, handle file
   if (!data) return;
-  const fileName = filePath.replace(/^.*[\\\/]/, "");
+  const fileName = filePath.replace(/^.*[\\/]/, "");
   return bioParsers.anyToJson(data, { fileName }).then(res => {
     return res[0].parsedSequence;
   });
 }
 
+function waitTillAppReady() {
+  return new Promise((resolve, reject) => {
+    const waitTillReadyInterval = setInterval(() => {
+      if (isAppReady) {
+        resolve();
+        clearInterval(waitTillReadyInterval);
+      }
+    }, 100);
+  });
+}
+
 async function createWindow(windowVars) {
+  await waitTillAppReady();
   //if no windowVars are passed then we should
   // Create the browser window.
   let mainWindowState = windowStateKeeper({
@@ -38,12 +66,22 @@ async function createWindow(windowVars) {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-
+    show: false,
     webPreferences: {
       // nodeIntegration: true, //we don't want to enable this because it is a security risk and slows down the app
       preload: path.join(__dirname, "src/preload.js")
     }
   });
+  console.log(`newWindow being created`);
+  newWindow.once("ready-to-show", () => {
+    newWindow.show();
+  });
+  const interval1 = setInterval(() => {
+    if (!newWindow) {
+      return clearInterval(interval1);
+    }
+    newWindow.logs = console.logs;
+  }, 100);
 
   // Let us register listeners on the window, so we can update the state
   // automatically (the listeners will be removed when the window is closed)
@@ -87,35 +125,59 @@ async function createWindow(windowVars) {
   });
 }
 
-app.on("will-finish-launching", () => {
-  app.on("open-file", async (event, path) => {
-    //mac only
-    event.preventDefault();
-    try {
-      const initialSeqJson = await getSeqJsonFromPath(path);
-      createWindow({ initialSeqJson });
-      // startupWindowVars.initialSeqJson = initialSeqJson;
-    } catch (e) {
-      console.error(`e73562891230:`, e);
-    }
-  });
-  // app.on("open-files", async (event, path) => {
-  //   //mac only
-  //   event.preventDefault();
-  //   try {
-  //     const initialSeqJson = await getSeqJsonFromPath(path);
-  //     startupWindowVars.initialSeqJson = initialSeqJson;
-  //   } catch (e) {
-  //     console.error(`e73562891230:`, e);
-  //   }
-  // });
+// let macOpenFilePaths: [];
+// let runningTimeout = null;
+// app.on("open-file", async (event, path) => {
+//   event.preventDefault();
+
+//   // Keep in array because more might come!
+//   macOpenFilePaths.push(path);
+
+//   // Clear previous handler if any
+//   if (runningTimeout !== null) {
+//     clearTimeout(runningTimeout);
+//     runningTimeout = null;
+//   }
+
+//   // Handle paths delayed in case more are coming!
+//   runningTimeout = setTimeout(async () => {
+//     if (this.windowsMainService) {
+//       try {
+//         const initialSeqJson = await getSeqJsonFromPath(path);
+//         createWindow({ initialSeqJson });
+//         // startupWindowVars.initialSeqJson = initialSeqJson;
+//       } catch (e) {
+//         console.error(`e73562891230:`, e);
+//       }
+
+//       macOpenFileURIs = [];
+//       runningTimeout = null;
+//     }
+//   }, 100);
+// });
+
+app.on("open-file", async (event, path) => {
+  isMacOpenTriggered = true;
+  //mac only
+  console.log(`open-file:`, path);
+  event.preventDefault();
+  try {
+    const initialSeqJson = await getSeqJsonFromPath(path);
+    console.log(`initialSeqJson:`, initialSeqJson);
+    createWindow({ initialSeqJson });
+  } catch (e) {
+    console.error(`e73562891230:`, e);
+  }
 });
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  if (!windows.length) {
+  console.log(`onReady`);
+  autoUpdater.checkForUpdatesAndNotify();
+  isAppReady = true;
+  if (!windows.length && !isMacOpenTriggered) {
     createWindow();
   }
 });
@@ -130,8 +192,23 @@ app.on("window-all-closed", function() {
 app.on("activate", function() {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (!windows.length) createWindow();
+  if (!windows.length) {
+    console.log(`onActivate`);
+    createWindow();
+  }
 });
 
+autoUpdater.on("update-available", () => {
+  let browserWindows = BrowserWindow.getAllWindows();
+  browserWindows.forEach(win => win.webContents.send("update_available"));
+});
+autoUpdater.on("update-downloaded", () => {
+  let browserWindows = BrowserWindow.getFocusedWindow();
+  browserWindows.forEach(win => win.webContents.send("update_downloaded"));
+});
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
