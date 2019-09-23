@@ -1,6 +1,6 @@
 {
-  "name": "ove",
-  "version": "0.0.8",
+  "name": "ove-electron",
+  "version": "0.1.0",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "deploy-mac": "env-cmd electron-builder --mac --publish always"
   },
   "build": {
+    "productName": "Open Vector Editor",
     "publish": {
       "provider": "github",
       "repo": "ove-electron",

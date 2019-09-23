@@ -50,15 +50,14 @@
         message.innerText = "Checking for updates...";
         notification.classList.remove("hidden");
       });
-      ipcRenderer.on("update-not-available", () => {
-        ipcRenderer.removeAllListeners("update-not-available");
-        message.innerText = "No updates available";
-        notification.classList.remove("hidden");
-        setTimeout(() => {
-          notification.classList.add("hidden");
-        }, 2000);
-
-      });
+      // ipcRenderer.on("update-not-available", () => {
+      //   ipcRenderer.removeAllListeners("update-not-available");
+      //   message.innerText = "No updates available";
+      //   notification.classList.remove("hidden");
+      //   setTimeout(() => {
+      //     notification.classList.add("hidden");
+      //   }, 2000);
+      // });
       ipcRenderer.on("download-progress", (e, text) => {
         message.innerText = "Downloading: " + text;
         notification.classList.remove("hidden"); //tnrtodo comment this out

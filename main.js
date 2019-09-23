@@ -213,9 +213,9 @@ autoUpdater.on("update-downloaded", () => {
 autoUpdater.on("checking-for-update", () => {
   sendStatusToWindow("checking-for-update");
 });
-autoUpdater.on("update-not-available", info => {
-  sendStatusToWindow("update-not-available");
-});
+// autoUpdater.on("update-not-available", info => {
+//   sendStatusToWindow("update-not-available");
+// });
 autoUpdater.on("error", err => {
   sendStatusToWindow("error", err);
 });
