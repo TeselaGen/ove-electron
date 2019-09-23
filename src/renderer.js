@@ -1,3 +1,4 @@
+
 const { currentWindow } = window;
 const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
 // export default generateSequenceData()
@@ -148,6 +149,7 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   }
 }); /* createDomNodeForMe will make a dom node for you and append it to the document.body*/
 
+const isCircular = seqDataToUse && seqDataToUse.circular
 editor.updateEditor({
   sequenceData: seqDataToUse,
   sequenceDataHistory: {}, //clear the sequenceDataHistory if there is any left over from a previous sequence
@@ -160,13 +162,14 @@ editor.updateEditor({
     [
       {
         // fullScreen: true,
-        active: true,
+        active: !!isCircular,
         id: "circular",
         name: "Circular Map"
       },
       {
         id: "rail",
-        name: "Linear Map"
+        name: "Linear Map",
+        active: !isCircular
       }
     ],
     [

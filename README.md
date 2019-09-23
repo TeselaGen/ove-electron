@@ -9,15 +9,15 @@ yarn start
 
 # Releasing 
 1. Bump the package.json version number
-
-2. Build windows and mac 
+2. Commit your changes
+3. Build windows and mac 
 ```
 yarn deploy
 ```
 wait for it to finish
 
-3. Go to https://github.com/tnrich/ove-electron/releases 
-4. Edit the most recently pushed release to publish it
+4. Go to https://github.com/tnrich/ove-electron/releases 
+5. Edit the most recently pushed release to publish it
 
 How auto-updating works :
 https://medium.com/@johndyer24/creating-and-deploying-an-auto-updating-electron-app-for-mac-and-windows-using-electron-builder-6a3982c0cee6

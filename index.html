@@ -11,22 +11,12 @@
       type="text/css"
       href="node_modules/open-vector-editor/umd/main.css"
     />
-    <style>
-      #notification {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        width: 200px;
-        z-index: 1000000;
-        padding: 20px;
-        border-radius: 5px;
-        background-color: white;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      }
-      .hidden {
-        display: none;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="src/style.css"
+    />
+    
     <div id="notification" class="hidden">
       <p id="message"></p>
       <button id="close-button" onClick="closeNotification()">
@@ -36,55 +26,14 @@
         Restart
       </button>
     </div>
+    
+    <span title="Dark Mode" onclick="toggleDarkMode(); return false" class="darkModeBtn bp3-icon-standard bp3-icon-moon"></span>
     <script
       type="text/javascript"
       src="node_modules/open-vector-editor/umd/open-vector-editor.js"
     ></script>
     <script src="./src/renderer.js"></script>
-    <script>
-      const notification = document.getElementById("notification");
-      const message = document.getElementById("message");
-      const restartButton = document.getElementById("restart-button");
-      ipcRenderer.on("checking-for-update", () => {
-        ipcRenderer.removeAllListeners("checking-for-update");
-        message.innerText = "Checking for updates...";
-        notification.classList.remove("hidden");
-      });
-      // ipcRenderer.on("update-not-available", () => {
-      //   ipcRenderer.removeAllListeners("update-not-available");
-      //   message.innerText = "No updates available";
-      //   notification.classList.remove("hidden");
-      //   setTimeout(() => {
-      //     notification.classList.add("hidden");
-      //   }, 2000);
-      // });
-      ipcRenderer.on("download-progress", (e, text) => {
-        message.innerText = "Downloading: " + text;
-        notification.classList.remove("hidden"); //tnrtodo comment this out
-      });
-      ipcRenderer.on("error", (e, text) => {
-        ipcRenderer.removeAllListeners("error");
-        message.innerText = "Error updating: " + text;
-      });
-      ipcRenderer.on("update_available", () => {
-        ipcRenderer.removeAllListeners("update_available");
-        message.innerText = "A new update is available. Downloading now...";
-        notification.classList.remove("hidden");
-      });
-      ipcRenderer.on("update_downloaded", () => {
-        ipcRenderer.removeAllListeners("update_downloaded");
-        message.innerText =
-          "Update Downloaded. It will be installed on restart. Restart now?";
-        restartButton.classList.remove("hidden");
-        notification.classList.remove("hidden");
-      });
-
-      function closeNotification() {
-        notification.classList.add("hidden");
-      }
-      function restartApp() {
-        ipcRenderer.send("restart_app");
-      }
-    </script>
+    <script src="./src/renderer_utils/autoUpdate.js"></script>
+    <script src="./src/renderer_utils/darkMode.js"></script>
   </body>
 </html>

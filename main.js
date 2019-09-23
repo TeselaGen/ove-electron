@@ -4,7 +4,7 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const bioParsers = require("bio-parsers");
 const fs = require("fs");
-const createMenu = require("./src/utils/menu");
+const createMenu = require("./src/main_utils/menu");
 const windowStateKeeper = require("electron-window-state");
 const { autoUpdater } = require("electron-updater");
 
@@ -220,15 +220,8 @@ autoUpdater.on("error", err => {
   sendStatusToWindow("error", err);
 });
 autoUpdater.on("download-progress", progressObj => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-  log_message =
-    log_message +
-    " (" +
-    progressObj.transferred +
-    "/" +
-    progressObj.total +
-    ")";
+  let log_message =
+    "Download in progress: " + Math.round(progressObj.percent) + "%";
   sendStatusToWindow("download-progress", log_message);
 });
 
