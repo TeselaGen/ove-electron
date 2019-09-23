@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -8,20 +8,17 @@
     "dist": "env-cmd electron-builder -wm --publish never",
     "dist-win": "env-cmd electron-builder --win --publish never",
     "dist-mac": "env-cmd electron-builder --mac --publish never",
-    "deploy": "env-cmd electron-builder -wm --publish always",
+    "deploy": "electron-builder -wm --publish always",
+    "/deploy": "env-cmd electron-builder -wm --publish always",
     "deploy-win": "env-cmd electron-builder --win --publish always",
+    "/deploy-mac": "electron-builder --mac --publish always",
     "deploy-mac": "env-cmd electron-builder --mac --publish always"
   },
   "build": {
-    "win": {
-      "publish": [
-        "github"
-      ]
-    },
-    "mac": {
-      "publish": [
-        "github"
-      ]
+    "publish": {
+      "provider": "github",
+      "repo": "ove-electron",
+      "owner": "tnrich"
     },
     "appId": "com.teselagen.openVectorEditor",
     "fileAssociations": [
