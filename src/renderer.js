@@ -1,4 +1,4 @@
-const { currentWindow, ipcRenderer } = window;
+const { currentWindow } = window;
 const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
 // export default generateSequenceData()
 const originalTitle = document.title;
