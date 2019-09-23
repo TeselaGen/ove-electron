@@ -56,6 +56,7 @@ async function createWindow(windowVars) {
   await waitTillAppReady();
   //if no windowVars are passed then we should
   // Create the browser window.
+
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
     defaultHeight: 800
@@ -198,19 +199,43 @@ app.on("activate", function() {
   }
 });
 
-autoUpdater.on("update-available", () => {
+function sendStatusToWindow(type, message) {
   let browserWindows = BrowserWindow.getAllWindows();
-  browserWindows && browserWindows.forEach(win => win.webContents.send("update_available"));
+  browserWindows &&
+    browserWindows.forEach(win => win.webContents.send(type, message));
+}
+autoUpdater.on("update-available", () => {
+  sendStatusToWindow("update_available");
 });
 autoUpdater.on("update-downloaded", () => {
-  let browserWindows = BrowserWindow.getAllWindows();
-  browserWindows && browserWindows.forEach(win => win.webContents.send("update_downloaded"));
+  sendStatusToWindow("update-downloaded");
+});
+autoUpdater.on("checking-for-update", () => {
+  sendStatusToWindow("checking-for-update");
+});
+autoUpdater.on("update-not-available", info => {
+  sendStatusToWindow("update-not-available");
+});
+autoUpdater.on("error", err => {
+  sendStatusToWindow("error", err);
+});
+autoUpdater.on("download-progress", progressObj => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message =
+    log_message +
+    " (" +
+    progressObj.transferred +
+    "/" +
+    progressObj.total +
+    ")";
+  sendStatusToWindow("download-progress", log_message);
 });
 
-ipcMain.on('restart_app', () => {
+ipcMain.on("restart_app", () => {
   setImmediate(() => {
     autoUpdater.quitAndInstall();
-  })
+  });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

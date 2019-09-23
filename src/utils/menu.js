@@ -36,7 +36,7 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
           accelerator: "CmdOrCtrl+N",
           click: () => {
             createWindow({
-              initialSeqJson: {}
+              initialSeqJson: undefined
             });
           }
         },

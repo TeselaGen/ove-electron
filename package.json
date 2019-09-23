@@ -1,6 +1,6 @@
 {
-  "name": "ove-electron",
-  "version": "0.0.6",
+  "name": "ove",
+  "version": "0.0.7",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -24,8 +24,8 @@
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "/entitlements": "src/misc/entitlements.mac.plist",
-      "/entitlementsInherit": "src/misc/entitlements.mac.plist"
+      "entitlements": "src/misc/entitlements.mac.plist",
+      "entitlementsInherit": "src/misc/entitlements.mac.plist"
     },
     "appId": "com.teselagen.openVectorEditor",
     "fileAssociations": [

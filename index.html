@@ -45,6 +45,28 @@
       const notification = document.getElementById("notification");
       const message = document.getElementById("message");
       const restartButton = document.getElementById("restart-button");
+      ipcRenderer.on("checking-for-update", () => {
+        ipcRenderer.removeAllListeners("checking-for-update");
+        message.innerText = "Checking for updates...";
+        notification.classList.remove("hidden");
+      });
+      ipcRenderer.on("update-not-available", () => {
+        ipcRenderer.removeAllListeners("update-not-available");
+        message.innerText = "No updates available";
+        notification.classList.remove("hidden");
+        setTimeout(() => {
+          notification.classList.add("hidden");
+        }, 2000);
+
+      });
+      ipcRenderer.on("download-progress", (e, text) => {
+        message.innerText = "Downloading: " + text;
+        notification.classList.remove("hidden"); //tnrtodo comment this out
+      });
+      ipcRenderer.on("error", (e, text) => {
+        ipcRenderer.removeAllListeners("error");
+        message.innerText = "Error updating: " + text;
+      });
       ipcRenderer.on("update_available", () => {
         ipcRenderer.removeAllListeners("update_available");
         message.innerText = "A new update is available. Downloading now...";
@@ -57,6 +79,7 @@
         restartButton.classList.remove("hidden");
         notification.classList.remove("hidden");
       });
+
       function closeNotification() {
         notification.classList.add("hidden");
       }
