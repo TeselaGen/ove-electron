@@ -11,12 +11,8 @@
       type="text/css"
       href="node_modules/open-vector-editor/umd/main.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="src/style.css"
-    />
-    
+    <link rel="stylesheet" type="text/css" href="src/style.css" />
+
     <div id="notification" class="hidden">
       <p id="message"></p>
       <button id="close-button" onClick="closeNotification()">
@@ -26,8 +22,13 @@
         Restart
       </button>
     </div>
-    
-    <span title="Dark Mode" onclick="toggleDarkMode(); return false" class="darkModeBtn bp3-icon-standard bp3-icon-moon"></span>
+
+    <a
+      class="bp3-button bp3-minimal darkModeBtn"
+      title="Dark Mode"
+      onclick="toggleDarkMode(); return false"
+      ><span class="bp3-icon-standard bp3-icon-moon"></span
+    ></a>
     <script
       type="text/javascript"
       src="node_modules/open-vector-editor/umd/open-vector-editor.js"
