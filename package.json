@@ -20,6 +20,13 @@
       "repo": "ove-electron",
       "owner": "tnrich"
     },
+    "afterSign": "src/misc/notarize.js",
+    "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "/entitlements": "src/misc/entitlements.mac.plist",
+      "/entitlementsInherit": "src/misc/entitlements.mac.plist"
+    },
     "appId": "com.teselagen.openVectorEditor",
     "fileAssociations": [
       {
