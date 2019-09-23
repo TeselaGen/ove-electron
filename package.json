@@ -1,6 +1,6 @@
 {
   "name": "ove",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {

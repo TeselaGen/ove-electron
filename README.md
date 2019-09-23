@@ -12,7 +12,12 @@ yarn start
 
 2. Build windows and mac 
 ```
-yarn dist
+yarn deploy
 ```
-3. Go to https://github.com/tnrich/ove-electron/releases/new
-4. Tag, title, describe and upload the .dmg and .exe files and create a new release! 
+wait for it to finish
+
+3. Go to https://github.com/tnrich/ove-electron/releases 
+4. Edit the most recently pushed release to publish it
+
+How auto-updating works :
+https://medium.com/@johndyer24/creating-and-deploying-an-auto-updating-electron-app-for-mac-and-windows-using-electron-builder-6a3982c0cee6
