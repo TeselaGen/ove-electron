@@ -1,16 +1,17 @@
 {
   "name": "ove-electron",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "env-cmd electron-builder -wm --publish never",
+    "build": "env-cmd electron-builder -wml --publish never",
     "build-win": "env-cmd electron-builder --win --publish never",
     "build-mac": "env-cmd electron-builder --mac --publish never",
-    "deploy": "env-cmd electron-builder --mac --windows --publish always",
+    "deploy": "env-cmd electron-builder --mac --windows --linux --publish always",
     "deploy-win": "env-cmd electron-builder --win --publish always",
-    "deploy-mac": "env-cmd electron-builder --mac --publish always"
+    "deploy-mac": "env-cmd electron-builder --mac --publish always",
+    "deploy-linux": "env-cmd electron-builder --linux --publish always"
   },
   "build": {
     "productName": "Open Vector Editor",
