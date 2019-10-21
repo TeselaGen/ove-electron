@@ -1,5 +1,10 @@
+![image](https://user-images.githubusercontent.com/2730609/67169732-df3ca800-f348-11e9-8003-baa91cd8cfec.png)
+
 # ove-electron
 This packages the open-vector-editor web app as an electron tool that can be used on windows/mac/linux
+
+![image](https://user-images.githubusercontent.com/2730609/67169717-c59b6080-f348-11e9-995a-89b7213428ff.png)
+
 
 # Developing 
 ```
