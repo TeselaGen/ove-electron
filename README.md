@@ -5,6 +5,7 @@ This packages the open-vector-editor web app as an electron tool that can be use
 
 ![image](https://user-images.githubusercontent.com/2730609/67169717-c59b6080-f348-11e9-995a-89b7213428ff.png)
 
+# Download: https://github.com/tnrich/ove-electron/releases
 
 # Developing 
 ```
