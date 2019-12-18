@@ -164,8 +164,7 @@ app.on("open-file", async (event, path) => {
   event.preventDefault();
   try {
     const initialSeqJson = await getSeqJsonFromPath(path);
-    console.log(`initialSeqJson:`, initialSeqJson);
-    createWindow({ initialSeqJson });
+    createWindow({ initialSeqJson, filePath: path });
   } catch (e) {
     console.error(`e73562891230:`, e);
   }
@@ -229,6 +228,11 @@ ipcMain.on("restart_app", () => {
   setImmediate(() => {
     autoUpdater.quitAndInstall();
   });
+});
+
+ipcMain.on("ove_onSave", (event, opts) => {
+  const { formattedSeqString, filePath } = opts;
+  fs.writeFileSync(filePath, formattedSeqString);
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

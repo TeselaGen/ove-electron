@@ -1,12 +1,66 @@
-
 const { currentWindow } = window;
 const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
 // export default generateSequenceData()
 const originalTitle = document.title;
 
+setNewTitle(seqDataToUse.name);
 
-document.title =
-  originalTitle + " -- " + (seqDataToUse.name || "Untitled Sequence");
+function setNewTitle(name) {
+  document.title = originalTitle + " -- " + (name || "Untitled Sequence");
+}
+
+const handleSave = isSaveAs => (
+  event,
+  sequenceDataToSave,
+  editorProps,
+  onSuccessCallback
+) => {
+  let newFilePath;
+  if (isSaveAs || !window.filePath) {
+    //we need to get the newFilePath
+    const filename = `${sequenceDataToSave.name || "Untitled_Sequence"}.gb`;
+    newFilePath = window.dialog.showSaveDialogSync({
+      title: filename,
+      defaultPath:
+        (window.filePath
+          ? window.filePath.slice(0, window.filePath.lastIndexOf("/") + 1)
+          : "~/Downloads/") + filename,
+      buttonLabel: "Save file"
+    });
+    if (!newFilePath) {
+      return; //cancel the save!
+    }
+    if (
+      !sequenceDataToSave.name ||
+      sequenceDataToSave.name === "Untitled_Sequence" ||
+      sequenceDataToSave.name === "Untitled Sequence"
+    ) {
+      sequenceDataToSave.name = newFilePath
+        .slice(newFilePath.lastIndexOf("/") + 1)
+        .replace(".gb", "");
+
+      setNewTitle(sequenceDataToSave.name);
+    }
+    editor.updateEditor({
+      //update the name of the seq without triggering the undo/redo stack tracking
+      sequenceData: sequenceDataToSave
+    });
+
+    window.filePath = newFilePath;
+    
+  } else {
+    //normal save
+    newFilePath = window.filePath;
+  }
+  const formattedSeqString = window.jsonToGenbank(sequenceDataToSave);
+  window.ipcRenderer.send("ove_onSave", {
+    filePath: newFilePath,
+    formattedSeqString
+  });
+  onSuccessCallback();
+  window.toastr.success(`Sequence Saved to ${newFilePath}`)
+};
+
 const editor = window.createVectorEditor("createDomNodeForMe", {
   isFullscreen: true,
   // or you can pass "createDomNodeForMe" but make sure to use editor.close() to clean up the dom node!
@@ -14,7 +68,8 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   //you can also pass a DOM node as the first arg here
   // showReadOnly: false,
   // disableSetReadOnly: true,
-  shouldAutosave: true,
+  shouldAutosave: false,
+  alwaysAllowSave: true,
   // rightClickOverrides: {
   //   selectionLayerRightClicked: (items /* { annotation }, props */) => {
   //     return [
@@ -30,25 +85,12 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   //   editor.close() //this calls reactDom.unmountComponent at the node you passed as the first arg
   // },
   onRename: newName => {
-    document.title = originalTitle + " -- " + newName;
+    setNewTitle(newName);
   }, //this option should be shown by default
   // onNew: () => {}, //unless this callback is defined, don't show the option to create a new seq
   // onDuplicate: () => {}, //unless this callback is defined, don't show the option to create a new seq
-  // onSave: function(
-  //   event,
-  //   sequenceDataToSave,
-  //   editorState,
-  //   onSuccessCallback
-  // ) {
-  //   console.info("event:", event);
-  //   console.info("sequenceData:", sequenceDataToSave);
-  //   console.info("editorState:", editorState);
-  //   // To disable the save button after successful saving
-  //   // either call the onSuccessCallback or return a successful promise :)
-  //   onSuccessCallback();
-  //   //or
-  //   // return myPromiseBasedApiCall()
-  // },
+  onSaveAs: handleSave(true),
+  onSave: handleSave(),
   // onDelete: data => {
   //   console.warn("would delete", data);
   // },
@@ -149,7 +191,7 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   }
 }); /* createDomNodeForMe will make a dom node for you and append it to the document.body*/
 
-const isCircular = seqDataToUse && seqDataToUse.circular
+const isCircular = seqDataToUse && seqDataToUse.circular;
 editor.updateEditor({
   sequenceData: seqDataToUse,
   sequenceDataHistory: {}, //clear the sequenceDataHistory if there is any left over from a previous sequence

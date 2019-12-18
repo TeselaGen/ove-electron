@@ -18,3 +18,6 @@
   top: 5px;
   right: 5px;
 }
+.bp3-toast-container {
+  z-index: 100000000;
+}
