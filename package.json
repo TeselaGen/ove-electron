@@ -72,6 +72,7 @@
   "devDependencies": {
     "electron": "^7.1.6",
     "electron-builder": "^21.2.0",
+    "electron-notarize": "^0.2.1",
     "env-cmd": "^10.0.1",
     "eslint": "^6.7.2",
     "eslint-config-teselagen": "^5.0.5"
