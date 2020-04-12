@@ -3023,10 +3023,10 @@ onetime@^5.1.0:
   dependencies:
     mimic-fn "^2.1.0"
 
-open-vector-editor@^10.1.64:
-  version "10.1.64"
-  resolved "https://registry.yarnpkg.com/open-vector-editor/-/open-vector-editor-10.1.64.tgz#4ef5f2ae3e7b0ecea447b2663f647c1650e3532e"
-  integrity sha512-z4xgORzvopv8rdLbkF1eVLY6m/vn9N5qUkN30qTRoMTpGFuxq22U+khfLCWtDmzfKW+8nXOy44xSQk0mGKtl6Q==
+open-vector-editor@^10.1.65:
+  version "10.1.65"
+  resolved "https://registry.yarnpkg.com/open-vector-editor/-/open-vector-editor-10.1.65.tgz#e15e83e290826f26c14bcd0d62af68fafb881cee"
+  integrity sha512-WKu+a4L7mvc/+hkW4YCS5z+A1g+9aNEv3MpMYTEXy/zc0B7RFVryyY1K177u3ZoZ8sVpFTl89bFbLsqE3tkDyQ==
   dependencies:
     "@blueprintjs/core" "^3.24.0"
     "@blueprintjs/datetime" "^3.15.2"

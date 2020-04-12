@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -80,6 +80,6 @@
   "dependencies": {
     "electron-updater": "^4.2.5",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^10.1.64"
+    "open-vector-editor": "^10.1.65"
   }
 }
