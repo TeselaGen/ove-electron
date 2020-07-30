@@ -30,7 +30,6 @@ let startupWindowVars = {};
 createMenu({ windows, createWindow, getSeqJsonFromPath });
 
 function getSeqJsonFromPath(_filePath) {
-  console.log(`process.argv[1]:`,process.argv[1])
   let filePath = _filePath || process.argv[1];
   if (filePath === ".") return;
   const data = fs.readFileSync(path.resolve(filePath), "utf-8");
@@ -54,8 +53,6 @@ function waitTillAppReady() {
 }
 
 async function createWindow(windowVars, passedWindow) {
-  console.log(`createWindowHit`)
-  console.log(`windowVars:`,windowVars)
   await waitTillAppReady();
   //if no windowVars are passed then we should
   // Create the browser window.
