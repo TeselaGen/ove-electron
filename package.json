@@ -70,16 +70,16 @@
   "author": "tnrich",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^8.2.1",
-    "electron-builder": "^22.4.1",
-    "electron-notarize": "^0.3.0",
+    "electron": "^9.1.1",
+    "electron-builder": "^22.8.0",
+    "electron-notarize": "^1.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-teselagen": "^5.0.5"
   },
   "dependencies": {
-    "electron-updater": "^4.2.5",
+    "electron-updater": "^4.3.4",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^10.1.65"
+    "open-vector-editor": "^10.1.87"
   }
 }

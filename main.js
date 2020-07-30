@@ -30,6 +30,7 @@ let startupWindowVars = {};
 createMenu({ windows, createWindow, getSeqJsonFromPath });
 
 function getSeqJsonFromPath(_filePath) {
+  console.log(`process.argv[1]:`,process.argv[1])
   let filePath = _filePath || process.argv[1];
   if (filePath === ".") return;
   const data = fs.readFileSync(path.resolve(filePath), "utf-8");
@@ -163,6 +164,7 @@ app.on("open-file", async (event, path) => {
   console.log(`open-file:`, path);
   event.preventDefault();
   try {
+    console.log("trying to open gb file")
     const initialSeqJson = await getSeqJsonFromPath(path);
     createWindow({ initialSeqJson, filePath: path });
   } catch (e) {
