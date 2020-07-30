@@ -53,19 +53,15 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
 
             filePaths.forEach(async (p) => {
               let browserWindow = BrowserWindow.getFocusedWindow();
-              if (browserWindow) {
-                browserWindow.close();
-                browserWindow = null;
-              }
+              // if (browserWindow) {
+              //   browserWindow.close();
+              //   browserWindow = null;
+              // }
 
               const initialSeqJson = await getSeqJsonFromPath(p);
-              console.log(`opening from OPEN click`);
-              console.log(`p:`, p);
-              console.log(`initialSeqJson:`, initialSeqJson);
-
               createWindow({
                 initialSeqJson,
-              });
+              }, browserWindow);
             });
           },
         },

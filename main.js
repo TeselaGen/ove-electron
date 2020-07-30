@@ -53,8 +53,9 @@ function waitTillAppReady() {
   });
 }
 
-async function createWindow(windowVars) {
+async function createWindow(windowVars, passedWindow) {
   console.log(`createWindowHit`)
+  console.log(`windowVars:`,windowVars)
   await waitTillAppReady();
   //if no windowVars are passed then we should
   // Create the browser window.
@@ -64,7 +65,7 @@ async function createWindow(windowVars) {
     defaultHeight: 800
   });
 
-  let newWindow = new BrowserWindow({
+  let newWindow = passedWindow || new BrowserWindow({
     x: mainWindowState.x,
     y: mainWindowState.y,
     width: mainWindowState.width,
@@ -91,7 +92,7 @@ async function createWindow(windowVars) {
   // and restore the maximized or full screen state
   mainWindowState.manage(newWindow);
 
-  windows.push(newWindow);
+  !passedWindow && windows.push(newWindow);
 
   if (!windowVars && process.platform === "win32") {
     //windows only
