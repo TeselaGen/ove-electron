@@ -22,9 +22,9 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
               { role: "hideothers" },
               { role: "unhide" },
               { type: "separator" },
-              { role: "quit" }
-            ]
-          }
+              { role: "quit" },
+            ],
+          },
         ]
       : []),
     // { role: 'fileMenu' }
@@ -36,9 +36,9 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
           accelerator: "CmdOrCtrl+N",
           click: () => {
             createWindow({
-              initialSeqJson: undefined
+              initialSeqJson: undefined,
             });
-          }
+          },
         },
         {
           label: "Open",
@@ -46,38 +46,42 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
           click: async () => {
             const { filePaths } = await dialog.showOpenDialog({
               filters: [
-                { name: "Sequence Files", extensions: ["gb", "gbk", "fasta"] }
+                { name: "Sequence Files", extensions: ["gb", "gbk", "fasta"] },
               ],
-              properties: ["openFile", "multiSelections"]
+              properties: ["openFile", "multiSelections"],
             });
 
-            filePaths.forEach(async p => {
-              let browserWindow = BrowserWindow.getFocusedWindow()
+            filePaths.forEach(async (p) => {
+              let browserWindow = BrowserWindow.getFocusedWindow();
               if (browserWindow) {
                 browserWindow.close();
                 browserWindow = null;
               }
 
               const initialSeqJson = await getSeqJsonFromPath(p);
+              console.log(`opening from OPEN click`);
+              console.log(`p:`, p);
+              console.log(`initialSeqJson:`, initialSeqJson);
+
               createWindow({
-                initialSeqJson
+                initialSeqJson,
               });
             });
-          }
+          },
         },
-        isMac ? { role: "close" } : { role: "quit" }
-      ]
+        isMac ? { role: "close" } : { role: "quit" },
+      ],
     },
     // { role: 'editMenu' }
     {
-      label: 'Edit',
+      label: "Edit",
       submenu: [
         // { role: 'undo' },
         // { role: 'redo' },
         // { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
+        { role: "cut" },
+        { role: "copy" },
+        { role: "paste" },
         // ...(isMac ? [
         //   { role: 'pasteAndMatchStyle' },
         //   { role: 'delete' },
@@ -95,7 +99,7 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
         //   { type: 'separator' },
         //   { role: 'selectAll' }
         // ])
-      ]
+      ],
     },
     // { role: 'viewMenu' }
     {
@@ -109,8 +113,8 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
         { role: "zoomin" },
         { role: "zoomout" },
         { type: "separator" },
-        { role: "togglefullscreen" }
-      ]
+        { role: "togglefullscreen" },
+      ],
     },
     // { role: 'windowMenu' }
     {
@@ -123,11 +127,11 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
               { type: "separator" },
               { role: "front" },
               { type: "separator" },
-              { role: "window" }
+              { role: "window" },
             ]
-          : [{ role: "close" }])
-      ]
-    }
+          : [{ role: "close" }]),
+      ],
+    },
   ];
 
   // const menu = Menu.buildFromTemplate([

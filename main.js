@@ -54,6 +54,7 @@ function waitTillAppReady() {
 }
 
 async function createWindow(windowVars) {
+  console.log(`createWindowHit`)
   await waitTillAppReady();
   //if no windowVars are passed then we should
   // Create the browser window.
