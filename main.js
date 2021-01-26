@@ -8,6 +8,7 @@ const createMenu = require("./src/main_utils/menu");
 const windowStateKeeper = require("electron-window-state");
 const { autoUpdater } = require("electron-updater");
 
+require("@electron/remote/main").initialize();
 // ************************************************************************
 // this function is super handy for debugging what is happening
 // in the main process from the renderer process !!
@@ -36,7 +37,7 @@ function getSeqJsonFromPath(_filePath) {
   //open, read, handle file
   if (!data) return;
   const fileName = filePath.replace(/^.*[\\/]/, "");
-  return bioParsers.anyToJson(data, { fileName }).then(res => {
+  return bioParsers.anyToJson(data, { fileName }).then((res) => {
     return res[0].parsedSequence;
   });
 }
@@ -59,20 +60,23 @@ async function createWindow(windowVars, passedWindow) {
 
   let mainWindowState = windowStateKeeper({
     defaultWidth: 1000,
-    defaultHeight: 800
+    defaultHeight: 800,
   });
 
-  let newWindow = passedWindow || new BrowserWindow({
-    x: mainWindowState.x,
-    y: mainWindowState.y,
-    width: mainWindowState.width,
-    height: mainWindowState.height,
-    show: false,
-    webPreferences: {
-      // nodeIntegration: true, //we don't want to enable this because it is a security risk and slows down the app
-      preload: path.join(__dirname, "src/preload.js")
-    }
-  });
+  let newWindow =
+    passedWindow ||
+    new BrowserWindow({
+      x: mainWindowState.x,
+      y: mainWindowState.y,
+      width: mainWindowState.width,
+      height: mainWindowState.height,
+      show: false,
+      webPreferences: {
+        enableRemoteModule: true,
+        // nodeIntegration: true, //we don't want to enable this because it is a security risk and slows down the app
+        preload: path.join(__dirname, "src/preload.js"),
+      },
+    });
   console.log(`newWindow being created`);
   newWindow.once("ready-to-show", () => {
     newWindow.show();
@@ -101,7 +105,7 @@ async function createWindow(windowVars, passedWindow) {
       console.error(`e123421231:`, e);
     }
   }
-  Object.keys(windowVars || startupWindowVars).forEach(k => {
+  Object.keys(windowVars || startupWindowVars).forEach((k) => {
     newWindow[k] = (windowVars || startupWindowVars)[k];
   });
   // if (process.argv.length >= 2) {
@@ -117,7 +121,7 @@ async function createWindow(windowVars, passedWindow) {
   // newWindow.
 
   // Emitted when the window is closed.
-  newWindow.on("closed", function() {
+  newWindow.on("closed", function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -163,7 +167,7 @@ app.on("open-file", async (event, path) => {
   console.log(`open-file:`, path);
   event.preventDefault();
   try {
-    console.log("trying to open gb file")
+    console.log("trying to open gb file");
     const initialSeqJson = await getSeqJsonFromPath(path);
     createWindow({ initialSeqJson, filePath: path });
   } catch (e) {
@@ -184,13 +188,13 @@ app.on("ready", () => {
 });
 
 // Quit when all windows are closed.
-app.on("window-all-closed", function() {
+app.on("window-all-closed", function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") app.quit();
 });
 
-app.on("activate", function() {
+app.on("activate", function () {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (!windows.length) {
@@ -202,7 +206,7 @@ app.on("activate", function() {
 function sendStatusToWindow(type, message) {
   let browserWindows = BrowserWindow.getAllWindows();
   browserWindows &&
-    browserWindows.forEach(win => win.webContents.send(type, message));
+    browserWindows.forEach((win) => win.webContents.send(type, message));
 }
 autoUpdater.on("update-available", () => {
   sendStatusToWindow("update_available");
@@ -216,10 +220,10 @@ autoUpdater.on("checking-for-update", () => {
 // autoUpdater.on("update-not-available", info => {
 //   sendStatusToWindow("update-not-available");
 // });
-autoUpdater.on("error", err => {
+autoUpdater.on("error", (err) => {
   sendStatusToWindow("error", err);
 });
-autoUpdater.on("download-progress", progressObj => {
+autoUpdater.on("download-progress", (progressObj) => {
   let log_message =
     "Download in progress: " + Math.round(progressObj.percent) + "%";
   sendStatusToWindow("download-progress", log_message);

@@ -3,6 +3,25 @@ const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
 // export default generateSequenceData()
 const originalTitle = document.title;
 
+currentWindow.webContents.session.on('will-download', (event, downloadItem, webContents) => {
+
+
+  const fileName = window.dialog.showSaveDialogSync({
+    defaultPath: "ashdfasdfasdf",
+    filters: [
+      { name: 'Excel', extensions: ['pdf'] }]
+  });
+
+  if (typeof fileName == "undefined") {
+    downloadItem.cancel()
+  }
+  else {
+    downloadItem.setSavePath(fileName);
+  }
+  event.stopPropagation()
+  event.preventDefault()
+});
+
 setNewTitle(seqDataToUse.name);
 
 function setNewTitle(name) {
@@ -16,10 +35,17 @@ const handleSave = isSaveAs => (
   onSuccessCallback
 ) => {
   let newFilePath;
-  if (isSaveAs || !window.filePath) {
+  console.log(`window.filePath:`,window.filePath)
+
+  // if (true || isSaveAs || !window.filePath) {
     //we need to get the newFilePath
     const filename = `${sequenceDataToSave.name || "Untitled_Sequence"}.gb`;
     newFilePath = window.dialog.showSaveDialogSync({
+      filters: [
+        { name: 'Genbank', extensions: ['gb'] },
+        { name: 'Fasta', extensions: ['fasta'] },
+        { name: 'TeselaGen', extensions: ['json'] },
+      ],
       title: filename,
       defaultPath:
         (window.filePath
@@ -48,10 +74,11 @@ const handleSave = isSaveAs => (
 
     window.filePath = newFilePath;
     
-  } else {
-    //normal save
-    newFilePath = window.filePath;
-  }
+  // } 
+  // else {
+  //   //normal save
+  //   newFilePath = window.filePath;
+  // }
   const formattedSeqString = window.jsonToGenbank(sequenceDataToSave);
   window.ipcRenderer.send("ove_onSave", {
     filePath: newFilePath,
