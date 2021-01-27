@@ -669,7 +669,7 @@ batch-processor@^1.0.0:
   resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
   integrity sha1-dclcMrdI4IUNEMKxaPa9vpiRrOg=
 
-bio-parsers@^7.0.0:
+bio-parsers@^7.0.0, bio-parsers@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/bio-parsers/-/bio-parsers-7.0.1.tgz#3f9d916ed2c3b077d5592b193020b1ea9cfe259c"
   integrity sha512-Vtd5L/FEwYOYWocybVq0C763ou2adHSaOK1zwchXMzitXDpL/3g2YN+08KXV4+jNJtouVJacxJU1B0F05KPoVg==

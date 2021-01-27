@@ -36,18 +36,18 @@ yarn build; //this will now build only the UMD file that ove-electron uses
 ```
 
 # Releasing 
-1. Bump the package.json version number
-2. Commit your changes
-3. yarn generateChangelog
-4. Build windows and mac 
+ - Bump the package.json version number
+ - Build windows and mac 
 ```
 yarn deploy
 ```
 wait for it to finish
 
-5. Go to https://github.com/tnrich/ove-electron/releases 
-6. Edit the most recently pushed release to publish it
-7. Commit any outstanding changes :) 
+ - Go to https://github.com/tnrich/ove-electron/releases 
+ - Edit the most recently pushed release to publish it
+ - Commit changes
+ - yarn generateChangelog
+ - Commit again
 
 ## Troubleshooting release process
 How auto-updating works :

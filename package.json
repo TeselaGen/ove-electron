@@ -81,8 +81,11 @@
   },
   "dependencies": {
     "@electron/remote": "^1.0.2",
+    "bio-parsers": "^7.0.1",
     "electron-updater": "^4.3.5",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^13.0.3"
+    "open-vector-editor": "^13.0.3",
+    "ve-range-utils": "^2.5.9",
+    "ve-sequence-utils": "^5.0.0"
   }
 }
