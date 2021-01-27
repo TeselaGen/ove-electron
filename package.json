@@ -12,7 +12,7 @@
     "deploy-win": "env-cmd electron-builder --win --publish always",
     "deploy-mac": "env-cmd electron-builder --mac --publish always",
     "deploy-linux": "env-cmd electron-builder --linux --publish always",
-    "generateChangelog": "auto-changelog -p && git add CHANGELOG.md"
+    "generateChangelog": "auto-changelog -p && git add . && git commit -m 'Updating CHANGELOG' && git push"
   },
   "build": {
     "productName": "Open Vector Editor",

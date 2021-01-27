@@ -47,7 +47,6 @@ wait for it to finish
  - Edit the most recently pushed release to publish it
  - Commit changes
  - yarn generateChangelog
- - Commit again
 
 ## Troubleshooting release process
 How auto-updating works :
