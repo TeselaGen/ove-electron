@@ -669,10 +669,10 @@ batch-processor@^1.0.0:
   resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
   integrity sha1-dclcMrdI4IUNEMKxaPa9vpiRrOg=
 
-bio-parsers@^6.2.6:
-  version "6.2.6"
-  resolved "https://registry.yarnpkg.com/bio-parsers/-/bio-parsers-6.2.6.tgz#e03057735008f730cbf28d36f657aa95a30ae60b"
-  integrity sha512-341dcd6olGswOmgFDqXOs/YdEyRN5XRsFNPYSwTwjq4fg25ro2V+kRvaeFkTwr/iRzf0QWhGpu6G3z0aNzYyHA==
+bio-parsers@^7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/bio-parsers/-/bio-parsers-7.0.1.tgz#3f9d916ed2c3b077d5592b193020b1ea9cfe259c"
+  integrity sha512-Vtd5L/FEwYOYWocybVq0C763ou2adHSaOK1zwchXMzitXDpL/3g2YN+08KXV4+jNJtouVJacxJU1B0F05KPoVg==
   dependencies:
     "@gmod/gff" "^1.1.2"
     buffer "^6.0.3"
@@ -2862,10 +2862,10 @@ onetime@^5.1.0:
   dependencies:
     mimic-fn "^2.1.0"
 
-open-vector-editor@^13.0.2:
-  version "13.0.2"
-  resolved "https://registry.yarnpkg.com/open-vector-editor/-/open-vector-editor-13.0.2.tgz#586e9a7880a89cb561b556585b27272109d392ab"
-  integrity sha512-toNUwvWZL/SMy+1CAaIeY4PYViGI46mX1O6lOtlR8L6A0cPf5qo/QWf4z1U4IhlMkCwe/2z5kKIAs5H4BmpIVQ==
+open-vector-editor@^13.0.3:
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/open-vector-editor/-/open-vector-editor-13.0.3.tgz#03ce156eb7380ca56232db0c580b75d5c1e7919c"
+  integrity sha512-hnpEHoa0jmYIWcyaf+n77xAGN4kpsvHfOEeiL/BrBkbc/3a0psr3Beu7vMU78Kd9pylRskOBRSdHshEhJ/3DGA==
   dependencies:
     "@blueprintjs/core" "^3.36.0"
     "@blueprintjs/datetime" "^3.20.0"
@@ -2873,7 +2873,7 @@ open-vector-editor@^13.0.2:
     "@risingstack/react-easy-state" "^6.3.0"
     "@teselagen/react-list" "^0.8.18"
     axios "^0.21.1"
-    bio-parsers "^6.2.6"
+    bio-parsers "^7.0.0"
     classnames "^2.2.6"
     clipboard "^2.0.6"
     color "^3.1.3"
@@ -2901,11 +2901,11 @@ open-vector-editor@^13.0.2:
     redux-thunk "2.3.0"
     reselect "^4.0.0"
     shortid "^2.2.16"
-    teselagen-react-components "^29.3.0"
+    teselagen-react-components "^29.3.3"
     tg-react-reflex "^2.0.10"
     typeface-ubuntu-mono "^0.0.54"
-    ve-range-utils "^2.5.8"
-    ve-sequence-utils "^4.0.3"
+    ve-range-utils "^2.5.9"
+    ve-sequence-utils "^5.0.0"
 
 optionator@^0.8.2:
   version "0.8.2"
@@ -3959,7 +3959,7 @@ term-size@^2.1.0:
   resolved "https://registry.yarnpkg.com/term-size/-/term-size-2.2.0.tgz#1f16adedfe9bdc18800e1776821734086fcc6753"
   integrity sha512-a6sumDlzyHVJWb8+YofY4TW112G6p2FCPEAFk+59gIYHv3XHRhm9ltVQ9kli4hNWeQBwSpe8cRN25x0ROunMOw==
 
-teselagen-react-components@^29.3.0:
+teselagen-react-components@^29.3.3:
   version "29.3.3"
   resolved "https://registry.yarnpkg.com/teselagen-react-components/-/teselagen-react-components-29.3.3.tgz#d7ddd8635b3c07fb74862e51296e0f67392b95ff"
   integrity sha512-CD6TWVaimMkZSsh97ZJTGsdF2Rsr9Y9UbiDQlihd3eaqK2FeJpD/c3szHfCogrnu3eNLG0AjvBJAhh6dvFx0pA==
@@ -4312,18 +4312,18 @@ value-equal@^1.0.1:
   resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-1.0.1.tgz#1e0b794c734c5c0cade179c437d356d931a34d6c"
   integrity sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==
 
-ve-range-utils@^2.5.8:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/ve-range-utils/-/ve-range-utils-2.5.8.tgz#f1fb9f2277c99913b3f3fd2b145f38c079f99342"
-  integrity sha512-CoRrJ8lk/oJcq6En9oWbMorfIjFPvCEfDFiPlQhFjJgudvq7LzILlhkC96UgC1sMbunjttKRL1OzC0MvjQpG2A==
+ve-range-utils@^2.5.9:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/ve-range-utils/-/ve-range-utils-2.5.9.tgz#c25edd55497e8236b0206f8d24cd35c1de8fb740"
+  integrity sha512-Ly3Pu58hPJNPWfaDdCA+lCj9uoPLf64V/ZGAVj3MndvmcYgL45aBCoj2hNo8/Dso+UmdLzgJm19j7APZ3jA/vw==
   dependencies:
     lodash "^4.17.4"
     validate.io-nonnegative-integer-array "^1.0.1"
 
-ve-sequence-utils@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/ve-sequence-utils/-/ve-sequence-utils-4.0.3.tgz#d8975dbb854c6e79295d791f29a9e3c4a627c8ef"
-  integrity sha512-rJgWMPl72Rwdm09YNOXztsY96jW6KQX9VDnA5AlcEUx+PcPCyJZPhi7KFAH36qxSEvfb44KHRokDIo3Ewk9zMA==
+ve-sequence-utils@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ve-sequence-utils/-/ve-sequence-utils-5.0.0.tgz#521379ca017348714476bf60f276cd220ed8ee1d"
+  integrity sha512-kQKJbiwTlxBIWbQih5tRhpmUzERPkLDnL93EJeQTXSg7LSZn0fLzjtpc3Yjuu6ok8tNLApn420e0QVbvc2b5cA==
   dependencies:
     bson-objectid "^1.1.1"
     escape-string-regexp "^1.0.5"
