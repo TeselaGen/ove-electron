@@ -47,6 +47,18 @@ wait for it to finish
 
 5. Go to https://github.com/tnrich/ove-electron/releases 
 6. Edit the most recently pushed release to publish it
+7. Commit any outstanding changes :) 
 
+## Troubleshooting release process
 How auto-updating works :
 https://medium.com/@johndyer24/creating-and-deploying-an-auto-updating-electron-app-for-mac-and-windows-using-electron-builder-6a3982c0cee6
+
+If apple notarize isn't working, this can help to troubleshoot:
+https://stackoverflow.com/questions/58358449/notarizing-electron-apps-throws-you-must-first-sign-the-relevant-contracts-on
+
+If you're seeing this error: 
+The request is missing an Authorization header field containing a valid macaroon
+You'll need to re-login to snapcraft.io (credentials under ubuntu.com)
+```
+snapcraft login
+```
