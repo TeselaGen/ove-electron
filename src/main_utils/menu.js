@@ -2,8 +2,6 @@ const { Menu } = require("electron");
 
 const { dialog } = require("electron");
 
-const { BrowserWindow } = require("electron");
-
 const isMac = process.platform === "darwin";
 
 module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
@@ -46,18 +44,32 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
           click: async () => {
             const { filePaths } = await dialog.showOpenDialog({
               filters: [
-                { name: "Sequence Files", extensions: ["gb", "gbk", "fasta"] },
+                {
+                  name: "Sequence Files",
+                  extensions: [
+                    "gb",
+                    "dna",
+                    "gbk",
+                    "gp",
+                    "fas",
+                    "fasta",
+                    "fa",
+                    "fna",
+                    "ffn",
+                    "gff",
+                    "gff3",
+                  ],
+                },
               ],
               properties: ["openFile", "multiSelections"],
             });
 
             filePaths.forEach(async (p) => {
-              let browserWindow = BrowserWindow.getFocusedWindow();
-
               const initialSeqJson = await getSeqJsonFromPath(p);
               createWindow({
                 initialSeqJson,
-              }, browserWindow);
+                filePath: p
+              });
             });
           },
         },

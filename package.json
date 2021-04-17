@@ -1,10 +1,11 @@
 {
   "name": "ove-electron",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "test": "mocha",
     "build": "env-cmd electron-builder -wml --publish never",
     "build-win": "env-cmd electron-builder --win --publish never",
     "build-mac": "env-cmd electron-builder --mac --publish never",
@@ -34,10 +35,16 @@
         "ext": "gb"
       },
       {
+        "ext": "dna"
+      },
+      {
         "ext": "gbk"
       },
       {
         "ext": "gp"
+      },
+      {
+        "ext": "fas"
       },
       {
         "ext": "fasta"
@@ -72,20 +79,22 @@
   "license": "MIT",
   "devDependencies": {
     "auto-changelog": "^2.2.1",
-    "electron": "^11.2.1",
-    "electron-builder": "^22.9.1",
+    "electron": "^12.0.4",
+    "electron-builder": "^22.10.5",
     "electron-notarize": "^1.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-config-teselagen": "^5.0.5"
+    "eslint-config-teselagen": "^5.0.7",
+    "mocha": "^8.3.2",
+    "spectron": "^14.0.0"
   },
   "dependencies": {
-    "@electron/remote": "^1.0.2",
-    "bio-parsers": "^7.0.1",
-    "electron-updater": "^4.3.5",
+    "bio-parsers": "^8.3.5",
+    "electron-updater": "^4.3.8",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^13.0.3",
+    "open-vector-editor": "^16.1.24",
+    "querystring": "^0.2.1",
     "ve-range-utils": "^2.5.9",
-    "ve-sequence-utils": "^5.0.0"
+    "ve-sequence-utils": "^5.1.0"
   }
 }

@@ -1,26 +1,7 @@
-const { currentWindow } = window;
-const seqDataToUse = currentWindow.initialSeqJson || { circular: true };
+// This window.initialSeqJson is getting set in preload from the query string from the main process load() call
+const seqDataToUse = window.initialSeqJson || { circular: true };
 // export default generateSequenceData()
 const originalTitle = document.title;
-
-currentWindow.webContents.session.on('will-download', (event, downloadItem, webContents) => {
-
-
-  const fileName = window.dialog.showSaveDialogSync({
-    defaultPath: "ashdfasdfasdf",
-    filters: [
-      { name: 'Excel', extensions: ['pdf'] }]
-  });
-
-  if (typeof fileName == "undefined") {
-    downloadItem.cancel()
-  }
-  else {
-    downloadItem.setSavePath(fileName);
-  }
-  event.stopPropagation()
-  event.preventDefault()
-});
 
 setNewTitle(seqDataToUse.name);
 
@@ -28,64 +9,67 @@ function setNewTitle(name) {
   document.title = originalTitle + " -- " + (name || "Untitled Sequence");
 }
 
-const handleSave = isSaveAs => (
+const handleSave = (isSaveAs) => async (
   event,
   sequenceDataToSave,
   editorProps,
   onSuccessCallback
 ) => {
-  let newFilePath;
-  console.log(`window.filePath:`,window.filePath)
+  const filters = [
+    { name: "Genbank", extensions: ["gb"] },
+    { name: "Fasta", extensions: ["fasta"] },
+    { name: "TeselaGen JSON", extensions: ["json"] },
+    { name: "Bed", extensions: ["bed"] },
+  ];
 
-  // if (true || isSaveAs || !window.filePath) {
-    //we need to get the newFilePath
-    const filename = `${sequenceDataToSave.name || "Untitled_Sequence"}.gb`;
-    newFilePath = window.dialog.showSaveDialogSync({
-      filters: [
-        { name: 'Genbank', extensions: ['gb'] },
-        { name: 'Fasta', extensions: ['fasta'] },
-        { name: 'TeselaGen', extensions: ['json'] },
-      ],
-      title: filename,
-      defaultPath:
-        (window.filePath
-          ? window.filePath.slice(0, window.filePath.lastIndexOf("/") + 1)
-          : "~/Downloads/") + filename,
-      buttonLabel: "Save file"
-    });
-    if (!newFilePath) {
-      return; //cancel the save!
-    }
-    if (
-      !sequenceDataToSave.name ||
-      sequenceDataToSave.name === "Untitled_Sequence" ||
-      sequenceDataToSave.name === "Untitled Sequence"
-    ) {
-      sequenceDataToSave.name = newFilePath
-        .slice(newFilePath.lastIndexOf("/") + 1)
-        .replace(".gb", "");
+  let nameToUse;
+  let defaultPath = "~/Downloads/";
+  if (window.filePath) {
+    nameToUse = window.filePath.slice(window.filePath.lastIndexOf("/") + 1);
+    defaultPath = window.filePath.slice(
+      0,
+      window.filePath.lastIndexOf("/") + 1
+    );
+  }
+  //we need to get the newFilePath
+  nameToUse =
+    nameToUse || `${sequenceDataToSave.name || "Untitled_Sequence"}.gb`;
+  const newFilePath = await window.api.send("ove_showSaveDialog", {
+    filters,
+    title: nameToUse,
+    defaultPath: defaultPath + nameToUse,
+    buttonLabel: `Save file ${isSaveAs ? "as" : ""}`,
+  });
 
-      setNewTitle(sequenceDataToSave.name);
-    }
+  if (!newFilePath) {
+    return; //cancel the save!
+  }
+
+  sequenceDataToSave.name = newFilePath.slice(newFilePath.lastIndexOf("/") + 1);
+  filters.forEach(({ extensions }) => {
+    //strip the extension from the name
+    sequenceDataToSave.name = sequenceDataToSave.name.replace(
+      `.${extensions[0]}`,
+      ""
+    );
+  });
+
+  if (!isSaveAs) {
+    setNewTitle(sequenceDataToSave.name);
+    window.filePath = newFilePath;
     editor.updateEditor({
       //update the name of the seq without triggering the undo/redo stack tracking
-      sequenceData: sequenceDataToSave
+      sequenceData: sequenceDataToSave,
     });
+  }
 
-    window.filePath = newFilePath;
-    
-  // } 
-  // else {
-  //   //normal save
-  //   newFilePath = window.filePath;
-  // }
-  const formattedSeqString = window.jsonToGenbank(sequenceDataToSave);
-  window.ipcRenderer.send("ove_onSave", {
+  window.api.send("ove_saveFile", {
     filePath: newFilePath,
-    formattedSeqString
+    sequenceDataToSave,
+    isSaveAs,
   });
   onSuccessCallback();
-  window.toastr.success(`Sequence Saved to ${newFilePath}`)
+  window.toastr.success(`Sequence Saved to ${newFilePath}`);
 };
 
 const editor = window.createVectorEditor("createDomNodeForMe", {
@@ -111,13 +95,22 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   // handleFullscreenClose: () => { //comment this function in to make the editor fullscreen by default
   //   editor.close() //this calls reactDom.unmountComponent at the node you passed as the first arg
   // },
-  onRename: newName => {
+  onRename: (newName) => {
     setNewTitle(newName);
   }, //this option should be shown by default
   // onNew: () => {}, //unless this callback is defined, don't show the option to create a new seq
   // onDuplicate: () => {}, //unless this callback is defined, don't show the option to create a new seq
   onSaveAs: handleSave(true),
   onSave: handleSave(),
+  onImport: (sequenceData) => {
+    try {
+      editor.updateEditor({
+        sequenceData,
+      });
+    } catch (error) {
+      console.error(`error 129821:`, error);
+    }
+  },
   // onDelete: data => {
   //   console.warn("would delete", data);
   // },
@@ -193,8 +186,8 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
       "translations",
       "cutsites",
       "orfs",
-      "genbank"
-    ]
+      "genbank",
+    ],
   },
   ToolBarProps: {
     toolList: [
@@ -212,10 +205,10 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
       // "viewTool",
       "editTool",
       "findTool",
-      "visibilityTool"
+      "visibilityTool",
       // "propertiesTool"
-    ]
-  }
+    ],
+  },
 }); /* createDomNodeForMe will make a dom node for you and append it to the document.body*/
 
 const isCircular = seqDataToUse && seqDataToUse.circular;
@@ -224,7 +217,7 @@ editor.updateEditor({
   sequenceDataHistory: {}, //clear the sequenceDataHistory if there is any left over from a previous sequence
   annotationVisibility: {
     // features: false,
-    orfTranslations: false
+    orfTranslations: false,
   },
   readOnly: false,
   panelsShown: [
@@ -233,26 +226,26 @@ editor.updateEditor({
         // fullScreen: true,
         active: !!isCircular,
         id: "circular",
-        name: "Circular Map"
+        name: "Circular Map",
       },
       {
         id: "rail",
         name: "Linear Map",
-        active: !isCircular
-      }
+        active: !isCircular,
+      },
     ],
     [
       {
         id: "sequence",
         name: "Sequence Map",
-        active: true
+        active: true,
       },
 
       {
         id: "properties",
-        name: "Properties"
-      }
-    ]
+        name: "Properties",
+      },
+    ],
   ],
   annotationsToSupport: {
     //these are the defaults, change to false to exclude
@@ -261,14 +254,6 @@ editor.updateEditor({
     parts: true,
     orfs: true,
     cutsites: true,
-    primers: false
-  }
+    primers: false,
+  },
 });
-// ************************************************************************
-// this function is super handy for debugging what is happening
-// in the main process from the renderer process !!
-//you'll need to comment it in in main.js also1
-// setInterval(() => {
-//   console.log(`currentWindow.logs:`,currentWindow.logs)
-// }, 5000);
-// ************************************************************************
