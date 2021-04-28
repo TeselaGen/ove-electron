@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "env-cmd electron-builder -wml --publish never",
     "build-win": "env-cmd electron-builder --win --publish never",
     "build-mac": "env-cmd electron-builder --mac --publish never",
-    "deploy": "env-cmd electron-builder --mac --windows --linux --publish always",
+    "_deploy": "env-cmd electron-builder --mac --windows --linux --publish always",
+    "deploy": "env-cmd electron-builder --mac --windows --publish always",
     "deploy-win": "env-cmd electron-builder --win --publish always",
     "deploy-mac": "env-cmd electron-builder --mac --publish always",
     "deploy-linux": "env-cmd electron-builder --linux --publish always",
@@ -26,6 +27,13 @@
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
       "entitlements": "src/misc/entitlements.mac.plist",
       "entitlementsInherit": "src/misc/entitlements.mac.plist"
     },
