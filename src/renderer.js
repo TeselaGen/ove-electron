@@ -9,70 +9,72 @@ function setNewTitle(name) {
   document.title = originalTitle + " -- " + (name || "Untitled Sequence");
 }
 
-const handleSave = (isSaveAs) => async (
-  event,
-  sequenceDataToSave,
-  editorProps,
-  onSuccessCallback
-) => {
-  const filters = [
-    { name: "Genbank", extensions: ["gb"] },
-    { name: "Fasta", extensions: ["fasta"] },
-    { name: "TeselaGen JSON", extensions: ["json"] },
-    { name: "Bed", extensions: ["bed"] },
-  ];
+const handleSave =
+  (isSaveAs) =>
+  async (event, sequenceDataToSave, editorProps, onSuccessCallback) => {
+    const filters = [
+      { name: "Genbank", extensions: ["gb"] },
+      { name: "Fasta", extensions: ["fasta"] },
+      { name: "TeselaGen JSON", extensions: ["json"] },
+      { name: "Bed", extensions: ["bed"] },
+    ];
 
-  let nameToUse;
-  let defaultPath = "~/Downloads/";
-  if (window.filePath) {
-    nameToUse = window.filePath.slice(window.filePath.lastIndexOf("/") + 1);
-    defaultPath = window.filePath.slice(
-      0,
-      window.filePath.lastIndexOf("/") + 1
-    );
-  }
-  //we need to get the newFilePath
-  nameToUse =
-    nameToUse || `${sequenceDataToSave.name || "Untitled_Sequence"}.gb`;
-  const newFilePath = await window.api.send("ove_showSaveDialog", {
-    filters,
-    title: nameToUse,
-    defaultPath: defaultPath + nameToUse,
-    buttonLabel: `Save file ${isSaveAs ? "as" : ""}`,
-  });
-
-  if (!newFilePath) {
-    return; //cancel the save!
-  }
-
-  sequenceDataToSave.name = newFilePath.slice(newFilePath.lastIndexOf("/") + 1);
-  filters.forEach(({ extensions }) => {
-    //strip the extension from the name
-    sequenceDataToSave.name = sequenceDataToSave.name.replace(
-      `.${extensions[0]}`,
-      ""
-    );
-  });
-
-  if (!isSaveAs) {
-    setNewTitle(sequenceDataToSave.name);
-    window.filePath = newFilePath;
-    editor.updateEditor({
-      //update the name of the seq without triggering the undo/redo stack tracking
-      sequenceData: sequenceDataToSave,
+    let nameToUse;
+    let defaultPath = "~/Downloads/";
+    if (window.filePath) {
+      nameToUse = window.filePath.slice(window.filePath.lastIndexOf("/") + 1);
+      defaultPath = window.filePath.slice(
+        0,
+        window.filePath.lastIndexOf("/") + 1
+      );
+    }
+    //we need to get the newFilePath
+    nameToUse =
+      nameToUse || `${sequenceDataToSave.name || "Untitled_Sequence"}.gb`;
+    const newFilePath = await window.api.send("ove_showSaveDialog", {
+      filters,
+      title: nameToUse,
+      defaultPath: defaultPath + nameToUse,
+      buttonLabel: `Save file ${isSaveAs ? "as" : ""}`,
     });
-  }
 
-  window.api.send("ove_saveFile", {
-    filePath: newFilePath,
-    sequenceDataToSave,
-    isSaveAs,
-  });
-  onSuccessCallback();
-  window.toastr.success(`Sequence Saved to ${newFilePath}`);
-};
+    if (!newFilePath) {
+      return; //cancel the save!
+    }
+
+    sequenceDataToSave.name = newFilePath.slice(
+      newFilePath.lastIndexOf("/") + 1
+    );
+    filters.forEach(({ extensions }) => {
+      //strip the extension from the name
+      sequenceDataToSave.name = sequenceDataToSave.name.replace(
+        `.${extensions[0]}`,
+        ""
+      );
+    });
+
+    if (!isSaveAs) {
+      setNewTitle(sequenceDataToSave.name);
+      window.filePath = newFilePath;
+      editor.updateEditor({
+        //update the name of the seq without triggering the undo/redo stack tracking
+        sequenceData: sequenceDataToSave,
+      });
+    }
+
+    window.api.send("ove_saveFile", {
+      filePath: newFilePath,
+      sequenceDataToSave,
+      isSaveAs,
+    });
+    onSuccessCallback();
+    window.toastr.success(`Sequence Saved to ${newFilePath}`);
+  };
 
 const editor = window.createVectorEditor("createDomNodeForMe", {
+  autoAnnotateFeatures: window._ove_addons.autoAnnotateFeatures,
+  autoAnnotateParts: window._ove_addons.autoAnnotateParts,
+  autoAnnotatePrimers: window._ove_addons.autoAnnotatePrimers,
   isFullscreen: true,
   // or you can pass "createDomNodeForMe" but make sure to use editor.close() to clean up the dom node!
 

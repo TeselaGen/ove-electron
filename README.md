@@ -53,14 +53,11 @@ GH_TOKEN=yourstringhere
 ```
 
 - Bump the package.json version number
-- Build windows and mac
-
+- Build windows and mac:
 ```
 yarn deploy
 ```
-
 wait for it to finish
-
 - Go to https://github.com/tnrich/ove-electron/releases
 - Edit the most recently pushed release to publish it
 - Keep the blockmap and latest.yml files as they are used by the auto-updater

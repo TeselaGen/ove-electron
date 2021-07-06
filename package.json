@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -97,12 +97,13 @@
     "spectron": "^14.0.0"
   },
   "dependencies": {
-    "bio-parsers": "^8.3.5",
+    "bio-parsers": "^8.3.13",
     "electron-updater": "^4.3.8",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^16.1.24",
+    "open-vector-editor": "^16.3.0",
+    "ove-auto-annotate": "^0.0.3",
     "querystring": "^0.2.1",
     "ve-range-utils": "^2.5.9",
-    "ve-sequence-utils": "^5.1.0"
+    "ve-sequence-utils": "^5.1.1"
   }
 }
