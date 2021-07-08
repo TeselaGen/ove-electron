@@ -88,5 +88,3 @@ snapcraft login
 I've set up a single spectron test under /test
 It can be run via `yarn test`
 Unfortunately spectron doesn't support interacting with native dialogs so I'd need to mock those to have the tests be at all useful. I should probably do this sometime down the line. (note OVE itself is close to full test coverage https://github.com/TeselaGen/openVectorEditor)
-
-
