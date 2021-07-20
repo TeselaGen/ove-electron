@@ -23,6 +23,9 @@ async function getSeqJsonFromPath(_filePath) {
   if (!data) return;
   const fileName = filePath.replace(/^.*[\\/]/, "");
   try {
+    if (fileName.endsWith(".json") && (data.sequence || data.proteinSequence)) {
+      return data;
+    }
     const res = await bioParsers.anyToJson(data, { fileName });
     return res[0].parsedSequence;
   } catch (error) {

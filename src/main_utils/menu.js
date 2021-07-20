@@ -48,6 +48,7 @@ module.exports = function createMenu({ createWindow, getSeqJsonFromPath }) {
                   name: "Sequence Files",
                   extensions: [
                     "gb",
+                    "json",
                     "dna",
                     "gbk",
                     "gp",
