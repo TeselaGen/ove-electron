@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "build": "env-cmd electron-builder -wml --publish never",
     "build-win": "env-cmd electron-builder --win --publish never",
     "build-mac": "env-cmd electron-builder --mac --publish never",
-    "_deploy": "env-cmd electron-builder --mac --windows --linux --publish always",
-    "deploy": "env-cmd electron-builder --mac --windows --publish always",
+    "deploy": "env-cmd electron-builder --mac --windows --linux --publish always",
     "deploy-win": "env-cmd electron-builder --win --publish always",
     "deploy-mac": "env-cmd electron-builder --mac --publish always",
     "deploy-linux": "env-cmd electron-builder --linux --publish always",
@@ -89,22 +88,22 @@
   "author": "tnrich",
   "license": "MIT",
   "devDependencies": {
-    "auto-changelog": "^2.2.1",
-    "electron": "^12.0.4",
-    "electron-builder": "^22.10.5",
+    "auto-changelog": "^2.3.0",
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7",
     "electron-notarize": "^1.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-config-teselagen": "^5.0.7",
+    "eslint-config-teselagen": "^5.0.9",
     "mocha": "^8.3.2",
     "spectron": "^14.0.0"
   },
   "dependencies": {
-    "bio-parsers": "^8.3.13",
-    "electron-updater": "^4.3.8",
+    "bio-parsers": "^8.3.14",
+    "electron-updater": "^4.3.9",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^16.3.0",
-    "ove-auto-annotate": "^0.0.3",
+    "open-vector-editor": "^16.3.5",
+    "ove-auto-annotate": "^0.0.5",
     "querystring": "^0.2.1",
     "ve-range-utils": "^2.5.9",
     "ve-sequence-utils": "^5.1.1"
