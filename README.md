@@ -55,6 +55,7 @@ GH_TOKEN=yourstringhere
 - Bump the package.json version number
 - Build windows, mac and linux:
 ```
+nvm use 14 
 yarn deploy
 ```
 wait for it to finish
