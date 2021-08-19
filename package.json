@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "An open source vector/plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -89,9 +89,9 @@
   "license": "MIT",
   "devDependencies": {
     "auto-changelog": "^2.3.0",
-    "electron": "^13.1.7",
+    "electron": "^13.2.1",
     "electron-builder": "^22.11.7",
-    "electron-notarize": "^1.0.0",
+    "electron-notarize": "^1.1.0",
     "env-cmd": "^10.1.0",
     "eslint": "^6.8.0",
     "eslint-config-teselagen": "^5.0.9",
@@ -99,13 +99,13 @@
     "spectron": "^14.0.0"
   },
   "dependencies": {
-    "bio-parsers": "^8.3.14",
+    "bio-parsers": "^8.3.16",
     "electron-updater": "^4.3.9",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^16.3.5",
+    "open-vector-editor": "^16.3.17",
     "ove-auto-annotate": "^0.0.5",
     "querystring": "^0.2.1",
     "ve-range-utils": "^2.5.9",
-    "ve-sequence-utils": "^5.1.1"
+    "ve-sequence-utils": "^5.1.4"
   }
 }

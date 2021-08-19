@@ -250,12 +250,11 @@ editor.updateEditor({
     ],
   ],
   annotationsToSupport: {
-    //these are the defaults, change to false to exclude
     features: true,
     translations: true,
     parts: true,
     orfs: true,
     cutsites: true,
-    primers: false,
+    primers: true,
   },
 });
