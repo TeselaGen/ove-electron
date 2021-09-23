@@ -23,6 +23,9 @@
       "owner": "tnrich"
     },
     "afterSign": "src/misc/notarize.js",
+    "win": {
+      "target": "appx"
+    },
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
