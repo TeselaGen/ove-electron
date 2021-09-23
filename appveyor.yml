@@ -6,7 +6,7 @@ environment:
       secure: KYGgQoB6aDDzBRXUz1Ur0O7BWmGLOlG0d+ye8AijewM=
   APPLEIDPASS:
       secure: 3xqr50DNGsQeonB9A+9JWml3F95bMWgNDLEwkge0M1w=
-      
+
 platform:
   - x64
 
@@ -22,6 +22,6 @@ install:
   - yarn
 
 build_script:
-  - yarn deploy
+  - yarn deploy-win
 
 test: off
