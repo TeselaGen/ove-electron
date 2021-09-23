@@ -1,5 +1,12 @@
 image: Visual Studio 2017
-
+environment:
+  GH_TOKEN:
+      secure: kvUWbn2M0QD68917ZIXoOaIR0fPBkFP/VhABUpEIjs+/AHjQjj9L3+qmVeJYeQ9G
+  APPLEID:
+      secure: KYGgQoB6aDDzBRXUz1Ur0O7BWmGLOlG0d+ye8AijewM=
+  APPLEIDPASS:
+      secure: 3xqr50DNGsQeonB9A+9JWml3F95bMWgNDLEwkge0M1w=
+      
 platform:
   - x64
 

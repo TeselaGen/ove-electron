@@ -6,13 +6,13 @@
   "scripts": {
     "start": "electron .",
     "test": "mocha",
-    "build": "env-cmd electron-builder -wml --publish never",
-    "build-win": "env-cmd electron-builder --win --publish never",
-    "build-mac": "env-cmd electron-builder --mac --publish never",
-    "deploy": "env-cmd electron-builder --mac --windows --linux --publish always",
-    "deploy-win": "env-cmd electron-builder --win --publish always",
-    "deploy-mac": "env-cmd electron-builder --mac --publish always",
-    "deploy-linux": "env-cmd electron-builder --linux --publish always",
+    "build": "electron-builder -wml --publish never",
+    "build-win": "electron-builder --win --publish never",
+    "build-mac": "electron-builder --mac --publish never",
+    "deploy": "electron-builder --mac --windows --linux --publish always",
+    "deploy-win": "electron-builder --win --publish always",
+    "deploy-mac": "electron-builder --mac --publish always",
+    "deploy-linux": "electron-builder --linux --publish always",
     "generateChangelog": "auto-changelog -p && git add . && git commit -m 'Updating CHANGELOG' && git push"
   },
   "build": {
