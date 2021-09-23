@@ -17,7 +17,7 @@
   },
   "build": {
     "appx": {
-      "identityName": "ove-teselagen"
+      "identityName": "openVectorEditor"
     },
     "productName": "Open Vector Editor",
     "publish": {
