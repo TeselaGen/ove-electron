@@ -16,6 +16,9 @@
     "generateChangelog": "auto-changelog -p && git add . && git commit -m 'Updating CHANGELOG' && git push"
   },
   "build": {
+    "appx": {
+      "identityName": "ove-teselagen"
+    },
     "productName": "Open Vector Editor",
     "publish": {
       "provider": "github",
