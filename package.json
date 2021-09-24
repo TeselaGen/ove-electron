@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "An open source vector or plasmid editor",
   "main": "main.js",
   "scripts": {
@@ -17,11 +17,14 @@
   },
   "build": {
     "appx": {
-      "identityName": "Teselagen.OpenVectorEditor",
+      "identityName": "56560Teselagen.OpenVectorEditor",
       "publisher": "CN=D373F92F-3481-433F-9DC5-0BE55DE5500D",
       "publisherDisplayName": "Teselagen",
       "applicationId": "OpenVectorEditor",
       "displayName": "OpenVectorEditor"
+    },
+    "win": {
+      "target": "appx"
     },
     "productName": "OpenVectorEditor",
     "publish": {
@@ -30,9 +33,6 @@
       "owner": "tnrich"
     },
     "afterSign": "src/misc/notarize.js",
-    "win": {
-      "target": "appx"
-    },
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
