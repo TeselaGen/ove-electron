@@ -7,10 +7,10 @@ This packages the open-vector-editor web app as an electron tool that can be use
 ![image](https://user-images.githubusercontent.com/2730609/67169717-c59b6080-f348-11e9-995a-89b7213428ff.png)
 
 # Installation Instructions:
+- windows -- go to the windows store https://www.microsoft.com/en-us/p/openvectoreditor/9nxcc5vc41k9?activetab=pivot:overviewtab and download it! (old instructions: download the .exe file and double click to install it)
 
-- Go to https://github.com/tnrich/ove-electron/releases and find the latest release for the platform you're on (win/mac/linux)
+- Mac/Linux: Go to https://github.com/tnrich/ove-electron/releases and find the latest release for the platform you're on (win/mac/linux)
 - mac -- download the DMG file and double click to install it
-- windows -- download the .exe file and double click to install it
 - linux -- download the .AppImage file and open a terminal. Run:
 
 ```
