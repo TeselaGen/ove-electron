@@ -17,7 +17,6 @@
   },
   "build": {
     "appx": {
-      "icon": "build/icon.png",
       "identityName": "56560Teselagen.OpenVectorEditor",
       "publisher": "CN=D373F92F-3481-433F-9DC5-0BE55DE5500D",
       "publisherDisplayName": "Teselagen",
