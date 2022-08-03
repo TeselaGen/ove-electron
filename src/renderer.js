@@ -81,6 +81,8 @@ const editor = window.createVectorEditor("createDomNodeForMe", {
   //you can also pass a DOM node as the first arg here
   // showReadOnly: false,
   // disableSetReadOnly: true,
+  allowPrimerBasesToBeEdited: true,
+  defaultLinkedOligoMessage: '',
   shouldAutosave: false,
   alwaysAllowSave: true,
   // rightClickOverrides: {

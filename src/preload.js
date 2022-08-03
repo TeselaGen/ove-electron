@@ -4,7 +4,9 @@
 // using a querystring - https://stackoverflow.com/questions/38335004/how-to-pass-parameters-from-main-process-to-render-processes-in-electron/38401579#38401579
 
 const { ipcRenderer, contextBridge } = require("electron");
+console.log(`here`)
 const querystring = require("querystring");
+console.log(`here2`)
 
 // Adds an object 'api' to the global window object:
 contextBridge.exposeInMainWorld("api", {
