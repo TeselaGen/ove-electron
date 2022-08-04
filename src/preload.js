@@ -4,9 +4,6 @@
 // using a querystring - https://stackoverflow.com/questions/38335004/how-to-pass-parameters-from-main-process-to-render-processes-in-electron/38401579#38401579
 
 const { ipcRenderer, contextBridge } = require("electron");
-console.log(`here`)
-const querystring = require("querystring");
-console.log(`here2`)
 
 // Adds an object 'api' to the global window object:
 contextBridge.exposeInMainWorld("api", {
@@ -16,9 +13,13 @@ contextBridge.exposeInMainWorld("api", {
 });
 
 // Add the initial seq data to the renderer window
-const query = querystring.parse(global.location.search);
+
+const urlParams = new URLSearchParams(global.location.search);
+
 try {
-  const datastring = query["?initialSeqJson"];
+  const datastring = urlParams.get('initialSeqJson');
+  console.log(`~ datastring`, datastring)
+
   if (datastring) {
     const data = JSON.parse(datastring);
     contextBridge.exposeInMainWorld("initialSeqJson", data);
@@ -28,11 +29,21 @@ try {
 }
 // Add the filepath to the renderer window
 try {
-  const datastring = query["?filePath"];
+  const datastring = urlParams.get('filePath');
+  console.log(`~ datastring`, datastring)
   if (datastring) {
     const data = JSON.parse(datastring);
     contextBridge.exposeInMainWorld("filePath", data);
   }
 } catch (error) {
   console.error(`error with filePath:`, error);
+}
+
+function getParameterByName(name, url ) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
