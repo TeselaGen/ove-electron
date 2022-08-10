@@ -137,12 +137,18 @@ app.on("open-file", async (event, path) => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", () => {
+app.on("ready", async () => {
   console.info(`App Starting Up`);
   autoUpdater.checkForUpdatesAndNotify();
   isAppReady = true;
   if (!windows.length && !isMacOpenTriggered) {
-    createWindow();
+    let path;
+    let initialSeqJson;
+    if (process.platform.startsWith("win") && process.argv.length >= 2) {
+      const path = process.argv[1];
+      const initialSeqJson = await getSeqJsonFromPath(path);
+    }
+    createWindow({ filePath: path, initialSeqJson });
   }
 });
 

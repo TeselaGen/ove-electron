@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "An open source vector or plasmid editor",
   "main": "main.js",
   "scripts": {
