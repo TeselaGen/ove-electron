@@ -53,7 +53,7 @@ GH_TOKEN=yourstringhere
 ```
 
 - Bump the package.json version number
-Login to snapcraft (credentials under ubuntu.com)
+Login to snapcraft (credentials under https://passwords.google.com/ --> ubuntu.com)
 snapcraft login
 Go to https://developer.apple.com/account and make sure all notices are signed
 - Build mac and linux:

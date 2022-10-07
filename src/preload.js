@@ -18,8 +18,6 @@ const urlParams = new URLSearchParams(global.location.search);
 
 try {
   const datastring = urlParams.get('initialSeqJson');
-  console.log(`~ datastring`, datastring)
-
   if (datastring) {
     const data = JSON.parse(datastring);
     contextBridge.exposeInMainWorld("initialSeqJson", data);
@@ -30,7 +28,6 @@ try {
 // Add the filepath to the renderer window
 try {
   const datastring = urlParams.get('filePath');
-  console.log(`~ datastring`, datastring)
   if (datastring) {
     const data = JSON.parse(datastring);
     contextBridge.exposeInMainWorld("filePath", data);
@@ -39,11 +36,11 @@ try {
   console.error(`error with filePath:`, error);
 }
 
-function getParameterByName(name, url ) {
-  name = name.replace(/[\[\]]/g, '\\$&');
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-      results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+// function getParameterByName(name, url ) {
+//   name = name.replace(/[\[\]]/g, '\\$&');
+//   const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+//       results = regex.exec(url);
+//   if (!results) return null;
+//   if (!results[2]) return '';
+//   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+// }

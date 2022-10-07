@@ -17,6 +17,7 @@ createMenu({ windows, createWindow, getSeqJsonFromPath });
 
 async function getSeqJsonFromPath(_filePath) {
   const filePath = _filePath || process.argv[1];
+  // const filePath = _filePath || process.argv[2] || process.argv[1];
   if (filePath === ".") return;
   const data = fs.readFileSync(path.resolve(filePath));
   //open, read, handle file
@@ -97,7 +98,7 @@ async function createWindow({ initialSeqJson, filePath, windowToUse } = {}) {
       //set a __filePath property so we can reference this if a user tries to open the same file multiple times
       __filePath: filePath,
     });
-
+console.log(`initialSeqJson:`,initialSeqJson)
   newWindow.loadFile("index.html", {
     query: { initialSeqJson: JSON.stringify(initialSeqJson), filePath },
   });
@@ -125,6 +126,7 @@ app.on("open-file", async (event, path) => {
   isMacOpenTriggered = true;
   //mac only
   event.preventDefault();
+  console.log(`open-file`)
   try {
     console.log("trying to open gb file");
     const initialSeqJson = await getSeqJsonFromPath(path);
@@ -142,11 +144,9 @@ app.on("ready", async () => {
   autoUpdater.checkForUpdatesAndNotify();
   isAppReady = true;
   if (!windows.length && !isMacOpenTriggered) {
-    let path;
     let initialSeqJson;
-    if (process.platform.startsWith("win") && process.argv.length >= 2) {
-      const path = process.argv[1];
-      const initialSeqJson = await getSeqJsonFromPath(path);
+    if ( process.argv.length >= 2) {
+      initialSeqJson = await getSeqJsonFromPath();
     }
     createWindow({ filePath: path, initialSeqJson });
   }
