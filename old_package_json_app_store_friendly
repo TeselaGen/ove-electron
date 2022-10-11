@@ -1,17 +1,15 @@
 {
   "name": "ove-electron",
-  "version": "1.5.1",
+  "version": "1.4.3",
   "description": "An open source vector or plasmid editor",
   "main": "main.js",
-  "author": "Thomas (tnrich) Willheim <tnrich@teselagen.com>",
   "scripts": {
     "start": "electron . ./pA11990.gb",
     "test": "mocha",
     "build": "env-cmd electron-builder -wml --publish never",
     "build-win": "env-cmd electron-builder --win --publish never",
     "build-mac": "env-cmd electron-builder --mac --publish never",
-    "build-linux": "env-cmd electron-builder --linux --publish never",
-    "deploy": "env-cmd electron-builder --mac --linux --win --publish always",
+    "deploy": "env-cmd electron-builder --mac --linux --publish always",
     "deploy-win": "electron-builder --win --publish always",
     "deploy-mac": "env-cmd electron-builder --mac --publish always",
     "deploy-linux": "env-cmd electron-builder --linux --publish always",
@@ -26,17 +24,7 @@
       "displayName": "OpenVectorEditor"
     },
     "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": {
-        "target": "deb",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      },
-      "icon": "build/icon.icns"
+      "target": "appx"
     },
     "productName": "OpenVectorEditor",
     "publish": {
@@ -44,12 +32,12 @@
       "repo": "ove-electron",
       "owner": "tnrich"
     },
+    "afterSign": "src/misc/notarize.js",
     "mac": {
-      "identity": null,
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "target": {
-        "target": "dmg",
+        "target": "default",
         "arch": [
           "x64",
           "arm64"
@@ -107,6 +95,7 @@
     "dna",
     "ove"
   ],
+  "author": "tnrich",
   "license": "MIT",
   "devDependencies": {
     "auto-changelog": "^2.4.0",
