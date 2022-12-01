@@ -40,8 +40,43 @@ cjs: console.log("commentMeBackOut") || false
 cd open-vector-editor;
 yarn build; //this will now build only the UMD file that ove-electron uses
 ```
-
 # Releasing
+- Bump the package.json version number
+- Build mac, windows and linux:
+```
+yarn deploy
+```
+- (despite having tried to remove macOS code signing from the process because it takes way too long to run, it looks like mac says the file is Damaged unless it has been code-signed - https://github.com/TeselaGen/openVectorEditor/issues/862#issuecomment-1333771642)
+- Go to https://github.com/tnrich/ove-electron/releases
+- Edit the most recently pushed release to publish it
+- Add the following instructions to the release notes 
+<---------------Copy Paste The Following into the Release Notes------------------->
+# Installing on Mac 
+- Download the correct mac file (arm64.dmg for M1/M2 macs or .dmg for intel macs)
+- Right click the downloaded file and hit open (can't double click to open it)
+- Accept the unknown developer warning
+
+# Installing on Ubuntu (or other .deb linux flavors):
+- Download the .deb file (either the AMD or ARM file based on the chip you're computer is using)
+- From the terminal run:
+```
+sudo dpkg -i ./Downloads/ove-electron_1.5.0_arm64.deb
+```
+
+# Installing on Windows
+- Download the .exe file 
+- Choose to keep the file (if it warns you it might be malicious)
+- Open it (it should start the installer)
+<---------------Copy Paste The Above into the Release Notes------------------->
+# Testing
+
+I've set up a single spectron test under /test
+It can be run via `yarn test`
+Unfortunately spectron doesn't support interacting with native dialogs so I'd need to mock those to have the tests be at all useful. I should probably do this sometime down the line. (note OVE itself is close to full test coverage https://github.com/TeselaGen/openVectorEditor)
+
+
+# DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::
+# OLD -- Releasing
 
 These environment variables will need to be set in a local .env file:
 
@@ -89,9 +124,4 @@ You'll need to re-login to snapcraft.io (credentials under ubuntu.com)
 ```
 snapcraft login
 ```
-
-# Testing
-
-I've set up a single spectron test under /test
-It can be run via `yarn test`
-Unfortunately spectron doesn't support interacting with native dialogs so I'd need to mock those to have the tests be at all useful. I should probably do this sometime down the line. (note OVE itself is close to full test coverage https://github.com/TeselaGen/openVectorEditor)
+# DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::DEPRECATED::

@@ -1,6 +1,6 @@
 {
   "name": "ove-electron",
-  "version": "1.5.1",
+  "version": "1.5.5",
   "description": "An open source vector or plasmid editor",
   "main": "main.js",
   "author": "Thomas (tnrich) Willheim <tnrich@teselagen.com>",
@@ -44,8 +44,8 @@
       "repo": "ove-electron",
       "owner": "tnrich"
     },
+    "afterSign": "src/misc/notarize.js",
     "mac": {
-      "identity": null,
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "target": {
@@ -110,23 +110,23 @@
   "license": "MIT",
   "devDependencies": {
     "auto-changelog": "^2.4.0",
-    "electron": "^21.1.0",
+    "electron": "22.0.0",
     "electron-builder": "^23.6.0",
     "electron-notarize": "^1.2.1",
     "env-cmd": "^10.1.0",
-    "eslint": "^8.24.0",
-    "eslint-config-teselagen": "^6.0.6",
-    "mocha": "^10.0.0",
+    "eslint": "^8.28.0",
+    "eslint-config-teselagen": "^6.0.16",
+    "mocha": "^10.1.0",
     "spectron": "^19.0.0"
   },
   "dependencies": {
-    "bio-parsers": "^8.3.32",
+    "bio-parsers": "^9.0.1",
     "electron-updater": "^5.3.0",
     "electron-window-state": "^5.0.3",
-    "open-vector-editor": "^18.1.37",
+    "open-vector-editor": "^18.1.53",
     "ove-auto-annotate": "^0.0.5",
     "querystring": "^0.2.1",
     "ve-range-utils": "^2.6.6",
-    "ve-sequence-utils": "^5.1.38"
+    "ve-sequence-utils": "^5.2.8"
   }
 }
