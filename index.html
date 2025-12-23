@@ -15,9 +15,7 @@
 
     <div id="notification" class="hidden">
       <p id="message"></p>
-      <button id="close-button" onClick="closeNotification()">
-        Close
-      </button>
+      <button id="close-button" onClick="closeNotification()">Close</button>
       <button id="restart-button" onClick="restartApp()" class="hidden">
         Restart
       </button>
@@ -37,6 +35,7 @@
       type="text/javascript"
       src="node_modules/ove-auto-annotate/umd/ove-auto-annotate.js"
     ></script>
+    <script src="./renderer_entry.js"></script>
     <script src="./src/renderer.js"></script>
     <!-- <script src="./src/renderer_utils/autoUpdate.js"></script> -->
     <script src="./src/renderer_utils/darkMode.js"></script>
